@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>University Society</title>
+    <style>
+        body {font-family: Arial, sans-serif; background-color: #23272A; color: #FFFFFF;}
+        .header {text-align: center; padding: 20px; background-color: #202225;}
+        .navbar {overflow: hidden; background-color: #202225;}
+        .navbar a {float: left; display: block; color: #FFFFFF; text-align: center; padding: 14px 16px; text-decoration: none;}
+        .navbar a:hover {background-color: #124429; color: black;}
+        .main {padding: 20px;}
+        .footer {text-align: center; padding: 20px; background-color: #202225;}
+    </style>
+</head>
+<div class="header">
+    <h1>Trent University Computer Science Society</h1>
+    <img src="logo.png" alt="Logo">
+</div>
+<div class="navbar">
+    <a href="#about">About Us</a>
+    <a href="#events">Events</a>
+    <a href="#contact">Contact Us</a>
+</div>
+
+<section id="contact">
+    <div class="container">
+        <h2>Contact Us</h2>
+        <form action="submit_form.php" method="post">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" class="form-control" id="name" placeholder="Enter your name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" placeholder="Enter your email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="message">Message:</label>
+                <textarea class="form-control" id="message" placeholder="Enter your message" name="message" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+    </div>
+</section>
+
+    <script>
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            let formData = new FormData(e.target);
+            let data = {};
+
+            for (let [key, value] of formData.entries()) {
+                data[key] = value;
+            }
+
+            fetch('submit_form.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            }).then(function(response) {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    throw new Error('Error: ' + response.statusText);
+                }
+            }).then(function(responseText) {
+                // Handle the response from the server
+                console.log(responseText);
+            }).catch(function(error) {
+                console.error(error);
+            });
+        });
+    </script>
+</body>
+</html>

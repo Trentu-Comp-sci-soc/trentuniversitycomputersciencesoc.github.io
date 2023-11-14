@@ -1,1 +1,0 @@
-!(build/my-app/brutha.png "bruda nahhw nahh brutha nah").
