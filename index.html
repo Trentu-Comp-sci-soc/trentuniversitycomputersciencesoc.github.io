@@ -30,8 +30,42 @@
         <h2 id="contact">Contact Us</h2>
         <p>Feel free to reach out if you have any questions...</p>
     </div>
+</section>
+
+<script>
+    document.querySelector('form').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        let formData = new FormData(e.target);
+        let data = {};
+
+        for (let [key, value] of formData.entries()) {
+            data[key] = value;
+        }
+
+        fetch('submit_form.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).then(function(response) {
+            if (response.ok) {
+                return response.text();
+            } else {
+                throw new Error('Error: ' + response.statusText);
+            }
+        }).then(function(responseText) {
+            // Handle the response from the server
+            console.log(responseText);
+        }).catch(function(error) {
+            console.error(error);
+        });
+    });
+</script>
     <div class="footer">
         <p>Trent University Computer Science Society © 2023</p>
     </div>
+    
 </body>
 </html>
